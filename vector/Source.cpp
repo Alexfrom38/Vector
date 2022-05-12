@@ -4,18 +4,21 @@ int main(void)
 {
 
 
-	TVector<double >A(5, 5);
-	TVector<double> B(5, 5);
-
+	TVector<int >A(5, 5);
+	TVector<int> B(7, 5);
+	TVector <int> C;
+	//std::cin >> A;
+	C = B;
+	int a = C.GetLength();
+	/*a = A.PopBack();
+	a = A.PopBack();
+	a = A.PopBack();
+	a = A.PopBack();
+	a = A.PopBack();*/
 	
-	TVector<double> C = A+B;
-	std::cout << (A == B) << std::endl;
-	/*std::cout << C[0] << std::endl;
-	std::cout << C[1] << std::endl;
-	std::cout << C[2] << std::endl;
-	std::cout << C[3] << std::endl;
-	std::cout << C[4] << std::endl;*/
-	C.~TVector();
+	//std::cout << A[1] << std::endl;
+	std::cin >> C;
+	std::cout << C;
 	A.~TVector();
 	B.~TVector();
 
