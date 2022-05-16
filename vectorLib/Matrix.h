@@ -55,9 +55,9 @@ std::istream& operator>>(std::istream& stream, TMatrix<Type>& _matrix)
 template<class Type>
 inline TMatrix<Type>::TMatrix()
 {
-	length = 0;
-	width = 0;
-	data = 0;
+	this->length = 0;
+	this->width = 0;
+	this->data = 0;
 }
 
 template<class Type>
@@ -169,7 +169,7 @@ inline TMatrix<Type>& TMatrix<Type>::operator=(const TMatrix<Type>& _matrix)
 template<class Type>
 inline TMatrix<Type> TMatrix<Type>::operator*(const TMatrix<Type>& _matrix)
 {
-	if (this -> length != _matrix.width) throw "size of matriÒes aren't correct";
+	if (this -> length != _matrix.width) throw "size of matri√±es aren't correct";
 	TMatrix<Type> result(_matrix.length, width, 0);
 	for (int i = 0; i < width; i++)
 	{
@@ -187,7 +187,7 @@ template<class Type>
  TMatrix<Type> TMatrix<Type>::operator*(const TVector<Type>& _vector)
 {
 	TVector<Type> temp(_vector);
-	if ((this->length) != temp.GetLength()) throw "size of matriÒes aren't correct";
+	if ((this->length) != temp.GetLength()) throw "size of matri√±es aren't correct";
 
 	TMatrix<Type> result(1, width, 0);
 	for (int i = 0; i < width; i++)
