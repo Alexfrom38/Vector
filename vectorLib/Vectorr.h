@@ -9,7 +9,8 @@ protected:
 	int length;
 
 public:
-	TVector(int _lenght = 1, Type p = 0);
+	
+	TVector(int _length = 0);
 	TVector(const TVector<Type>& _vector);
 	~TVector();
 	Type GetLength();
@@ -21,8 +22,12 @@ public:
 	TVector<Type> operator / (const TVector<Type>& _vector);
 	TVector<Type>& operator = (const TVector<Type>& _vector);
 	
+	void ReSize(int NewLength = 0);
+
 	bool operator == (const TVector<Type>& _vector);
 }; 
+
+
 
 template<class Type>
 std::istream& operator>>(std::istream& stream, TVector<Type>& _vector)
@@ -32,12 +37,8 @@ std::istream& operator>>(std::istream& stream, TVector<Type>& _vector)
 	stream >> count;
 	Type variable = 0;
 	int length = _vector.GetLength();
-	if (count > length) throw "the length of vector is less than count of number that you want to write ";
-	for (int q = 0; q < length; q++)
-	{
-		variable = _vector.PopBack();
-	}
-	std::cout << "len = " << i << std::endl;
+	_vector.ReSize(0);
+	
 	variable = 0;
 	for (int q = 0; q < count; q++)
 	{
@@ -57,20 +58,13 @@ std::ostream& operator<<(std::ostream& stream, TVector<Type>& _vector)
 	return stream;
 }
 
-
 template<class Type>
-inline TVector<Type>::TVector(int _lenght, Type p)
+inline TVector<Type>::TVector(int _length)
 {
-	length = _lenght;
-  data = new Type[_lenght];
-
-	for (int i = 0; i < _lenght; i++)
-	{
-		data[i] = p;
-	}
-
+	data = 0;
+	data = new Type[_length];
+	length = _length;
 }
-
 template <class Type>
 inline TVector<Type>::TVector(const TVector<Type>& _vector)
 {
@@ -92,7 +86,6 @@ inline TVector<Type>::TVector(const TVector<Type>& _vector)
 			data[q] = _vector.data[q];
 		}
 	}
-
 }
 
 template<class Type>
@@ -141,31 +134,30 @@ inline Type TVector<Type>::PopBack()
 template<class Type>
 inline void TVector<Type>::PushBack(Type variable)
 {
-	Type* temporary = new Type[length];
-	for (int i = 0; i < length; i++)
-	{
-		temporary[i] = data[i];
-	}
-	data = 0;
-	delete[] data;
-	data = 0;
-	data = new Type[length + 1];
-	for (int i = 0; i < length; i++)
-	{
-		data[i] = temporary[i];
-	}
-	data[length] = variable;
-	length++;
+
+		Type* temporary = new Type[length];
+		for (int i = 0; i < length; i++)
+		{
+			temporary[i] = data[i];
+		}
+		data = 0;
+		delete[] data;
+		data = 0;
+		data = new Type[length + 1];
+		for (int i = 0; i < length; i++)
+		{
+			data[i] = temporary[i];
+		}
+		data[length] = variable;
+		length++;
+	
 }
 
 template<class Type>
 inline Type& TVector<Type>::operator[](int number)
 {
-	if (number < 0 || number >= length) throw "trying to get unexist element of vector (array of values in vector) !";	
 	return data[number];
 }
-
-
 
 template<class Type> 
 TVector<Type> TVector<Type>::operator+ (const TVector<Type>& _vector)
@@ -223,8 +215,6 @@ TVector<Type> TVector<Type>::operator/(const TVector<Type>& _vector)
 template<class Type>
 inline TVector<Type>& TVector<Type>::operator=(const TVector<Type>& _vector)
 {
-	
-	if (_vector.data == 0 || _vector.length == 0) throw "empty vector was got";
 	if(data == 0 ) data  = new Type[_vector.length];
 	else if (data != 0)
 	{
@@ -240,6 +230,34 @@ inline TVector<Type>& TVector<Type>::operator=(const TVector<Type>& _vector)
 		data[q] = _vector.data[q];
 	}
 	return *this;
+}
+
+template<class Type>
+inline void TVector<Type>::ReSize(int NewLength)
+{
+	if (NewLength < 0) throw "The new length (or equals) less than zero";
+	if (NewLength >= 0)
+	{
+		Type* temporary = new Type[NewLength];
+		for (int q = 0; q < NewLength; q++)
+		{
+			temporary[q] = data[q];
+		}
+
+		data = 0;
+		delete[] data;
+		data = 0;
+
+		data = new Type[NewLength];
+		length = NewLength;
+
+		for (int q = 0; q < length; q++)
+			data[q] = temporary[q];
+		temporary = 0;
+		delete[] temporary;
+		temporary = 0;
+	}
+
 }
 
 template<class Type>

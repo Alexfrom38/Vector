@@ -156,6 +156,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\vectorLib\Matrix.h" />
     <ClInclude Include="..\..\vectorLib\Vectorr.h" />
   </ItemGroup>
   <ItemGroup>
