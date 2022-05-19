@@ -21,6 +21,8 @@ public:
 	TVector<Type> operator - (const TVector<Type>& _vector);
 	TVector<Type> operator / (const TVector<Type>& _vector);
 	TVector<Type>& operator = (const TVector<Type>& _vector);
+	TVector<Type> operator *(const TVector<Type>& _vector);
+	Type ScalarMult(const TVector<Type>& FirstVector, const TVector<Type>& SecondVector);
 	
 	void ReSize(int NewLength = 0);
 
@@ -230,6 +232,28 @@ inline TVector<Type>& TVector<Type>::operator=(const TVector<Type>& _vector)
 		data[q] = _vector.data[q];
 	}
 	return *this;
+}
+
+template<class Type>
+inline TVector<Type> TVector<Type>::operator*(const TVector<Type>& _vector)
+{
+	if (_vector.length != length) throw "Error!";
+	TVector<Type> result(*this);
+	for (int q = 0; q < result.length; q++)
+	{
+		result.data[q] = result.data[q] * _vector.data[q];
+	}
+	return result;
+}
+
+template<class Type>
+inline Type TVector<Type>::ScalarMult(const TVector<Type>& FirstVector, const TVector<Type>& SecondVector)
+{
+	Type result = 0;
+	if (FirstVector.length != SecondVector.length) throw "Error";
+	for (int q = 0; q < FirstVector.length; q++)
+		result += FirstVector.data[q] * SecondVector.data[q];
+	return result;
 }
 
 template<class Type>
